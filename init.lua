@@ -110,9 +110,11 @@ local config = {
 
   -- Modify which-key registration
   ["which-key"] = {
-    -- Add bindings to the normal mode <leader> mappings
     register_n_leader = {
-      -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
+      ["w"] = { "<cmd>HopWord<cr>", "Hop Word" },
+      ["b"] = { "<cmd>HopWord<cr>", "Hop Word" },
+      ["j"] = { "<cmd>HopLine<cr>", "Hop Line" },
+      ["k"] = { "<cmd>HopLine<cr>", "Hop Line" },
     },
   },
 
@@ -184,16 +186,6 @@ local config = {
     }
   end,
   
-  -- Remap to Hop
-  ["which-key"] = {
-    register_n_leader = {
-      ["w"] = { "<cmd>HopWord<cr>", "Hop Word" },
-      ["b"] = { "<cmd>HopWord<cr>", "Hop Word" },
-      ["j"] = { "<cmd>HopLine<cr>", "Hop Line" },
-      ["k"] = { "<cmd>HopLine<cr>", "Hop Line" },
-    },
-  },
-
   -- This function is run last
   -- good place to configure mappings and vim options
   polish = function()
