@@ -83,15 +83,8 @@ local config = {
       {
         "machakann/vim-sandwich"
       },
-      -- { "andweeb/presence.nvim" },
-      -- {
-      --   "ray-x/lsp_signature.nvim",
-      --   event = "BufRead",
-      --   config = function()
-      --     require("lsp_signature").setup()
-      --   end,
-      -- },
     },
+
     -- All other entries override the setup() call for default plugins
     treesitter = {
       ensure_installed = { "lua" },
@@ -224,6 +217,8 @@ local config = {
     map("", "W", "<Plug>CamelCaseMotion_w", opts)
     map("", "B", "<Plug>CamelCaseMotion_b", opts)
     map("", "E", "<Plug>CamelCaseMotion_e", opts)
+
+    map("n", "do", "ddO", opts)
 
     -- Set autocommands
     vim.cmd [[
