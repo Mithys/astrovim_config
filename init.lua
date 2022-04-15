@@ -80,6 +80,9 @@ local config = {
           cmp.setup(config)
         end,
       },
+      {
+        "machakann/vim-sandwich"
+      },
       -- { "andweeb/presence.nvim" },
       -- {
       --   "ray-x/lsp_signature.nvim",
@@ -95,6 +98,15 @@ local config = {
     },
     packer = {
       compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    },
+    lualine = {
+      options = {
+        theme = 'dracula',
+        section_separators = { left = '', right = ''},
+      },
+      sections = {
+        lualine_a = {'mode'},
+      },
     },
   },
 
