@@ -1,48 +1,5 @@
 local config = {
 
- -- Set colorscheme
-  colorscheme = "default_theme",
-
-  -- Default theme configuration
-  default_theme = {
-    diagnostics_style = "none",
-    -- Modify the color table
-    colors = {
-      fg = "#abb2bf",
-    },
-    -- Modify the highlight groups
-    highlights = function(highlights)
-      local C = require "default_theme.colors"
-
-      highlights.Normal = { fg = C.fg, bg = C.bg }
-      return highlights
-    end,
-  },
-
-  -- Disable default plugins
-  enabled = {
-    bufferline = true,
-    neo_tree = true,
-    lualine = true,
-    gitsigns = true,
-    colorizer = true,
-    toggle_term = true,
-    comment = true,
-    symbols_outline = true,
-    indent_blankline = true,
-    dashboard = true,
-    which_key = true,
-    neoscroll = true,
-    ts_rainbow = true,
-    ts_autotag = true,
-  },
-
-  -- Disable AstroVim ui features
-  ui = {
-    nui_input = true,
-    telescope_select = true,
-  },
-
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
@@ -83,6 +40,12 @@ local config = {
       {
         "machakann/vim-sandwich"
       },
+      {
+        "beauwilliams/focus.nvim",
+        config = function()
+          require("focus").setup({cursorline = false})
+        end,
+      },
     },
 
     -- All other entries override the setup() call for default plugins
@@ -103,46 +66,23 @@ local config = {
     },
   },
 
-  -- Add paths for including more VS Code style snippets in luasnip
-  luasnip = {
-    vscode_snippet_paths = {},
-  },
-
-  -- Modify which-key registration
   ["which-key"] = {
     register_n_leader = {
       ["w"] = { "<cmd>HopWord<cr>", "Hop Word" },
       ["b"] = { "<cmd>HopWord<cr>", "Hop Word" },
       ["j"] = { "<cmd>HopLine<cr>", "Hop Line" },
       ["k"] = { "<cmd>HopLine<cr>", "Hop Line" },
-    },
-  },
-
-  -- Extend LSP configuration
-  lsp = {
-    -- add to the server on_attach function
-    -- on_attach = function(client, bufnr)
-    -- end,
-
-    -- override the lsp installer server-registration function
-    -- server_registration = function(server, opts)
-    --   server:setup(opts)
-    -- end
-
-    -- Add overrides for LSP server settings, the keys are the name of the server
-    ["server-settings"] = {
-      -- example for addings schemas to yamlls
-      -- yamlls = {
-      --   settings = {
-      --     yaml = {
-      --       schemas = {
-      --         ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
-      --         ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-      --         ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-      --       },
-      --     },
-      --   },
-      -- },
+      h = {
+        name = "Focus",
+        n = { "<cmd>FocusSplitNicely<cr>", "Split Nicely" },
+        h = { "<cmd>FocusSplitLeft<cr>", "Split Left" },
+        j = { "<cmd>FocusSplitDown<cr>", "Split Down" },
+        k = { "<cmd>FocusSplitUp<cr>", "Split Up" },
+        l = { "<cmd>FocusSplitRight<cr>", "Split Right" },
+        e = { "<cmd>FocusEqualise<cr>", "Equalise" },
+        m = { "<cmd>FocusMaximise<cr>", "Maximise" },
+        t = { "<cmd>FocusToggle<cr>", "Toggle" },
+      }
     },
   },
 
@@ -211,6 +151,10 @@ local config = {
     map("", "E", "<Plug>CamelCaseMotion_e", opts)
 
     map("n", "do", "ddO", opts)
+
+    map("n", ",", "<cmd>FocusSplitCycle<cr>", opts)
+
+    map("n", "<C-j>", "<C-d>", opts)
 
     -- Set autocommands
     vim.cmd [[
