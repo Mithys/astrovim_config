@@ -1,16 +1,28 @@
 local config = {
 
+  -- Disable default plugins
+  enabled = {
+    ts_rainbow = false,
+  },
+
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
+      -- {
+      --   "Mofiqul/dracula.nvim",
+      --   as = "dracula",
+      --   config = function()
+      --     vim.cmd "colorscheme dracula"
+      --   end,
+      --  },
       {
-        "Mofiqul/dracula.nvim",
-        as = "dracula",
+        "mithys/garlic.vim",
+        as = "garlic",
         config = function()
-          vim.cmd "colorscheme dracula"
+          vim.cmd "colorscheme garlic"
         end,
-       },
+      },
       {
         "phaazon/hop.nvim",
         branch = "v1", -- optional but strongly recommended
