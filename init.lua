@@ -2,20 +2,20 @@ local config = {
 
   -- Disable default plugins
   enabled = {
-    ts_rainbow = false,
+    -- ts_rainbow = false,
   },
 
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
-      -- {
-      --   "Mofiqul/dracula.nvim",
-      --   as = "dracula",
-      --   config = function()
-      --     vim.cmd "colorscheme dracula"
-      --   end,
-      --  },
+      {
+        "Mofiqul/dracula.nvim",
+        as = "dracula",
+        -- config = function()
+        --   vim.cmd "colorscheme dracula"
+        -- end,
+       },
       {
         "mithys/garlic.vim",
         as = "garlic",
@@ -63,6 +63,9 @@ local config = {
     -- All other entries override the setup() call for default plugins
     treesitter = {
       ensure_installed = { "lua" },
+      rainbow = {
+        enable = false,
+      }
     },
     packer = {
       compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
@@ -167,6 +170,12 @@ local config = {
     map("n", ",", "<cmd>FocusSplitCycle<cr>", opts)
 
     map("n", "<C-j>", "<C-d>", opts)
+
+    local pid = vim.fn.getpid()
+    local omnisharp_bin = "~/omnisharp-roslyn/artifacts/publish/OmniSharp.Http.Driver/linux-x64/net6.0/Omnisharp"
+    require 'lspconfig'.omnisharp.setup{
+        cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
+    }
 
     -- Set autocommands
     vim.cmd [[
