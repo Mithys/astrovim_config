@@ -1,5 +1,27 @@
 local config = {
 
+  -- Configure AstroNvim updates
+  updater = {
+    remote = "origin", -- remote to use
+    channel = "nightly", -- "stable" or "nightly"
+    version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+    branch = "main", -- branch name (NIGHTLY ONLY)
+    commit = nil, -- commit hash (NIGHTLY ONLY)
+    pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
+    skip_prompts = false, -- skip prompts about breaking changes
+    show_changelog = true, -- show the changelog after performing an update
+    auto_reload = false, -- automatically reload and sync packer after a successful update
+    auto_quit = false, -- automatically quit the current session after a successful update
+    -- remotes = { -- easily add new remotes to track
+    --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
+    --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
+    --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
+    -- },
+  },
+
+  -- Set colorscheme to use
+  colorscheme = "jellybeans",
+
   -- Disable default plugins
   enabled = {
     -- ts_rainbow = false,
@@ -12,16 +34,15 @@ local config = {
       {
         "Mofiqul/dracula.nvim",
         as = "dracula",
-        -- config = function()
-        --   vim.cmd "colorscheme dracula"
-        -- end,
        },
       {
         "mithys/garlic.vim",
         as = "garlic",
-        config = function()
-          vim.cmd "colorscheme garlic"
-        end,
+      },
+      {
+        "kabouzeid/nvim-jellybeans",
+        requires = "rktjmp/lush.nvim",
+        as = "jellybeans",
       },
       {
         "phaazon/hop.nvim",
@@ -72,7 +93,7 @@ local config = {
     },
     lualine = {
       options = {
-        theme = 'dracula',
+        theme = 'auto',
         section_separators = { left = '', right = ''},
       },
       sections = {
@@ -149,6 +170,7 @@ local config = {
     local set = vim.opt
     -- Set options
     set.relativenumber = false
+    set.wrap = true
 
     -- Set key bindings
     -- map("n", "<C-s>", "<cmd>w!<cr>", opts)
@@ -171,11 +193,14 @@ local config = {
 
     map("n", "<C-j>", "<C-d>", opts)
 
-    local pid = vim.fn.getpid()
-    local omnisharp_bin = "~/omnisharp-roslyn/artifacts/publish/OmniSharp.Http.Driver/linux-x64/net6.0/Omnisharp"
-    require 'lspconfig'.omnisharp.setup{
-        cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
-    }
+    -- omnisharp lsp config
+    -- require'lspconfig'.omnisharp.setup {
+    --   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    --   on_attach = function(_, bufnr)
+    --     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    --   end,
+    --   cmd = { "/home/mithy/.local/share/omnisharp/run", "--languageserver" , "--hostPID", tostring(pid) },
+    -- }
 
     -- Set autocommands
     vim.cmd [[
