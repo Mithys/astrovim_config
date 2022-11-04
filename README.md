@@ -1,4 +1,4 @@
-# Mithy's AstroVim Config
+# Mithy's AstroNvim Config
 
 1. Clone AstroNvim (normal installation instructions)
 
@@ -12,7 +12,7 @@ git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
 git clone https://github.com/mithys/astrovim_config.git ~/.config/nvim/lua/user
 ```
 
-3. Initialize AstroVim
+3. Initialize AstroNvim
 
 ```sh
 nvim  --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
