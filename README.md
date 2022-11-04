@@ -1,6 +1,6 @@
 # Mithy's AstroVim Config
 
-1. Clone AstroVim (normal installation instructions)
+1. Clone AstroNvim (normal installation instructions)
 
 ```sh
 git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
