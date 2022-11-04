@@ -3,7 +3,7 @@
 1. Clone AstroVim (normal installation instructions)
 
 ```sh
-git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
+git clone https://github.com/kabinspace/AstroNvim ~/.config/nvim
 ```
 
 2. Clone your empty new repository to your `~/.config/nvim/lua` folder
