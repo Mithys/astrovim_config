@@ -181,7 +181,7 @@ local config = {
     map("", "<leader>j", "<cmd>HopLine<cr>", opts)
     map("", "<leader>k", "<cmd>HopLine<cr>", opts)
 
-    map("", "f", "<cmd>HopChar1<cr>", opts)
+    -- map("", "f", "<cmd>HopChar1<cr>", opts)
 
     map("", "W", "<Plug>CamelCaseMotion_w", opts)
     map("", "B", "<Plug>CamelCaseMotion_b", opts)
@@ -189,7 +189,7 @@ local config = {
 
     map("n", "do", "ddO", opts)
 
-    map("n", ",", "<cmd>FocusSplitCycle<cr>", opts)
+    -- map("n", ",", "<cmd>FocusSplitCycle<cr>", opts)
 
     map("n", "<C-j>", "<C-d>", opts)
 
