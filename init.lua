@@ -3,7 +3,7 @@ local config = {
   -- Configure AstroNvim updates
   updater = {
     remote = "origin", -- remote to use
-    channel = "nightly", -- "stable" or "nightly"
+    channel = "stable", -- "stable" or "nightly"
     version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
     branch = "main", -- branch name (NIGHTLY ONLY)
     commit = nil, -- commit hash (NIGHTLY ONLY)
@@ -32,9 +32,13 @@ local config = {
     -- Add plugins, the packer syntax without the "use"
     init = {
       {
+        "wuelnerdotexe/vim-enfocado",
+        as = "enfocado,"
+      },
+      {
         "Mofiqul/dracula.nvim",
         as = "dracula",
-       },
+      },
       {
         "mithys/garlic.vim",
         as = "garlic",
@@ -43,6 +47,10 @@ local config = {
         "kabouzeid/nvim-jellybeans",
         requires = "rktjmp/lush.nvim",
         as = "jellybeans",
+      },
+      {
+        "sonph/onehalf",
+        as = "onehalf",
       },
       {
         "phaazon/hop.nvim",
@@ -88,9 +96,6 @@ local config = {
         enable = false,
       }
     },
-    packer = {
-      compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-    },
     lualine = {
       options = {
         theme = 'auto',
@@ -100,116 +105,96 @@ local config = {
         lualine_a = {'mode'},
       },
     },
-  },
 
-  ["which-key"] = {
-    register_n_leader = {
-      ["w"] = { "<cmd>HopWord<cr>", "Hop Word" },
-      ["b"] = { "<cmd>HopWord<cr>", "Hop Word" },
-      ["j"] = { "<cmd>HopLine<cr>", "Hop Line" },
-      ["k"] = { "<cmd>HopLine<cr>", "Hop Line" },
-      h = {
-        name = "Focus",
-        n = { "<cmd>FocusSplitNicely<cr>", "Split Nicely" },
-        h = { "<cmd>FocusSplitLeft<cr>", "Split Left" },
-        j = { "<cmd>FocusSplitDown<cr>", "Split Down" },
-        k = { "<cmd>FocusSplitUp<cr>", "Split Up" },
-        l = { "<cmd>FocusSplitRight<cr>", "Split Right" },
-        e = { "<cmd>FocusEqualise<cr>", "Equalise" },
-        m = { "<cmd>FocusMaximise<cr>", "Maximise" },
-        t = { "<cmd>FocusToggle<cr>", "Toggle" },
-      }
-    },
-  },
-
-  -- Diagnostics configuration (for vim.diagnostics.config({}))
-  diagnostics = {
-    virtual_text = true,
-    underline = true,
-  },
-
-  -- null-ls configuration
-  ["null-ls"] = function()
-    -- Formatting and linting
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim
-    local status_ok, null_ls = pcall(require, "null-ls")
-    if not status_ok then
-      return
-    end
-
-    -- Check supported formatters
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-    local formatting = null_ls.builtins.formatting
-
-    -- Check supported linters
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-    local diagnostics = null_ls.builtins.diagnostics
-
-    null_ls.setup {
-      debug = false,
-      sources = {
-        -- Set a formatter
-        formatting.rufo,
-        -- Set a linter
-        diagnostics.rubocop,
+    ["which-key"] = {
+      register_n_leader = {
+        ["w"] = { "<cmd>HopWord<cr>", "Hop Word" },
+        ["b"] = { "<cmd>HopWord<cr>", "Hop Word" },
+        ["j"] = { "<cmd>HopLine<cr>", "Hop Line" },
+        ["k"] = { "<cmd>HopLine<cr>", "Hop Line" },
+        h = {
+          name = "Focus",
+          n = { "<cmd>FocusSplitNicely<cr>", "Split Nicely" },
+          h = { "<cmd>FocusSplitLeft<cr>", "Split Left" },
+          j = { "<cmd>FocusSplitDown<cr>", "Split Down" },
+          k = { "<cmd>FocusSplitUp<cr>", "Split Up" },
+          l = { "<cmd>FocusSplitRight<cr>", "Split Right" },
+          e = { "<cmd>FocusEqualise<cr>", "Equalise" },
+          m = { "<cmd>FocusMaximise<cr>", "Maximise" },
+          t = { "<cmd>FocusToggle<cr>", "Toggle" },
+        }
       },
-      -- NOTE: You can remove this on attach function to disable format on save
-      on_attach = function(client)
-        if client.resolved_capabilities.document_formatting then
-          vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()"
-        end
-      end,
-    }
-  end,
-  
-  -- This function is run last
-  -- good place to configure mappings and vim options
-  polish = function()
-    local opts = { noremap = true, silent = true }
-    local map = vim.api.nvim_set_keymap
-    local set = vim.opt
-    -- Set options
-    set.relativenumber = false
-    set.wrap = true
+    },
+    
+    -- Diagnostics configuration (for vim.diagnostics.config({}))
+    diagnostics = {
+      virtual_text = true,
+      underline = true,
+    },
 
-    -- Set key bindings
-    -- map("n", "<C-s>", "<cmd>w!<cr>", opts)
-    map("n", "/", "<cmd>noh<cr>/", opts)
+    -- null-ls configuration
+    ["null-ls"] = function()
+      -- Formatting and linting
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim
+      local status_ok, null_ls = pcall(require, "null-ls")
+      if not status_ok then
+        return
+      end
 
-    map("", "<leader>w", "<cmd>HopWord<cr>", opts)
-    map("", "<leader>b", "<cmd>HopWord<cr>", opts)
-    map("", "<leader>j", "<cmd>HopLine<cr>", opts)
-    map("", "<leader>k", "<cmd>HopLine<cr>", opts)
+      -- Check supported formatters
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+      local formatting = null_ls.builtins.formatting
 
-    -- map("", "f", "<cmd>HopChar1<cr>", opts)
+      -- Check supported linters
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+      local diagnostics = null_ls.builtins.diagnostics
 
-    map("", "W", "<Plug>CamelCaseMotion_w", opts)
-    map("", "B", "<Plug>CamelCaseMotion_b", opts)
-    map("", "E", "<Plug>CamelCaseMotion_e", opts)
+      null_ls.setup {
+        debug = false,
+        sources = {
+          -- Set a formatter
+          formatting.rufo,
+          -- Set a linter
+          diagnostics.rubocop,
+        },
+        -- NOTE: You can remove this on attach function to disable format on save
+        on_attach = function(client)
+          if client.resolved_capabilities.document_formatting then
+            vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()"
+          end
+        end,
+      }
+    end,
 
-    map("n", "do", "ddO", opts)
+    -- This function is run last
+    -- good place to configure mappings and vim options
+    polish = function()
+      local opts = { noremap = true, silent = true }
+      local map = vim.api.nvim_set_keymap
+      local set = vim.opt
+      --
+      -- Set options
+      set.relativenumber = true
+      set.wrap = true
 
-    -- map("n", ",", "<cmd>FocusSplitCycle<cr>", opts)
+      -- Set key bindings
+      map("n", "/", "<cmd>noh<cr>/", opts)
 
-    map("n", "<C-j>", "<C-d>", opts)
+      map("", "<leader>w", "<cmd>HopWord<cr>", opts)
+      map("", "<leader>b", "<cmd>HopWord<cr>", opts)
+      map("", "<leader>j", "<cmd>HopLine<cr>", opts)
+      map("", "<leader>k", "<cmd>HopLine<cr>", opts)
 
-    -- omnisharp lsp config
-    -- require'lspconfig'.omnisharp.setup {
-    --   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-    --   on_attach = function(_, bufnr)
-    --     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    --   end,
-    --   cmd = { "/home/mithy/.local/share/omnisharp/run", "--languageserver" , "--hostPID", tostring(pid) },
-    -- }
+      map("", "W", "<Plug>CamelCaseMotion_w", opts)
+      map("", "B", "<Plug>CamelCaseMotion_b", opts)
+      map("", "E", "<Plug>CamelCaseMotion_e", opts)
 
-    -- Set autocommands
-    vim.cmd [[
-      augroup packer_conf
-        autocmd!
-        autocmd bufwritepost plugins.lua source <afile> | PackerSync
-      augroup end
-    ]]
-  end,
+      map("n", "do", "ddO", opts)
+
+      map("n", "<C-j>", "<C-d>", opts)
+
+    end,
+  },
 }
 
 return config
